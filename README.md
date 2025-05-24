@@ -1,57 +1,123 @@
-<!-- Electro: ASP.NET Core MVC E-commerce Project 🛍️💻 -->
+🚀 **E-Ticaret Platformu**
 
-# Electro: ASP.NET Core MVC E-commerce Project
 
-## Introduction
 
-Welcome to Electro, our sleek and powerful ASP.NET Core MVC e-commerce project! Crafted during our 9-month ITI Assiut Branch internship, this project represents a fusion of innovation and dedication.
+Bu proje, ASP.NET Core MVC üzerinde geliştirilmiş, modüler bir e-ticaret uygulamasıdır. Ürünleri, kategorileri ve kullanıcıları yönetmek için kapsamlı bir yönetim paneli sunarken, müşteriler için de sorunsuz bir alışveriş deneyimi sağlar. Ölçeklenebilirlik ve sürdürülebilirlik göz önünde bulundurularak tasarlanmış olup, modern yazılım mimarisi prensiplerine uygun olarak geliştirilmiştir.
 
-## Project Overview
+✨ **Temel Özellikler**
 
-- **Design Pattern:** Engineered with the elegance of MVC (Model-View-Controller) architecture.
-- **Architecture:** Boasting a robust 3-tier architecture with dynamic repositories and injected services.
-- **Solid Principles:** Embraced the mighty SOLID principles – champions of code integrity and flexibility.
-- **Technologies:** Mastered the art of C#, LINQ, and Entity Framework for seamless data flow. Our "code-first" approach ensured a harmonious database integration.
+Güvenli Kullanıcı Kimlik Doğrulama ve Yetkilendirme: Güçlü kullanıcı yönetimi için ASP.NET Core Identity ile uygulandı; rol tabanlı erişim kontrolü (Admin, Müşteri rolleri) içerir.
+Ürün Yaşam Döngüsü Yönetimi: Özel bir yönetici paneli aracılığıyla ürünler için tam CRUD (Oluştur, Oku, Güncelle, Sil) işlemleri; detaylı ürün listelemelerini ve dinamik görsel yüklemelerini destekler.
+Kategori Yönetimi: Ürünlerin düzenli organizasyonunu sağlamak için ürün kategorilerinin verimli bir şekilde oluşturulması, düzenlenmesi ve silinmesi.
+Alışveriş Sepeti İşlevselliği: Kullanıcıların ödeme yapmadan önce ürünleri sepete eklemesine, çıkarmasına ve yönetmesine olanak tanıyan sezgisel alışveriş sepeti mekanizması.
+Dinamik Görsel İşleme: Ürün başına birden fazla görsel yüklemeyi destekleyerek ürün sunumunu zenginleştirir.
+Kapsamlı Veri Doğrulama: Veri bütünlüğünü sağlamak için hem sunucu tarafı hem de istemci tarafı doğrulama için DataAnnotations kullanır.
+Katmanlı Mimari: Gelişmiş modülerlik, test edilebilirlik ve sorumlulukların ayrılması için temiz, N-katmanlı bir mimari desen (Application, Domain, Infrastructure, WebUI) takip eder.
+Otomatik Nesne Eşleme: DTO (Veri Transfer Nesnesi) ile Entity arasında sorunsuz ve verimli veri aktarımı için AutoMapper kullanır, tekrar eden kodları azaltır.
+Veritabanı Yönetimi: ORM için Entity Framework Core tarafından desteklenir, SQL Server ile verimli veri kalıcılığı ve alımını kolaylaştırır.
 
-## Authentication & Security
+**🛠️ Teknolojiler ve Bağımlılıklar**
 
-- **Fort Knox Security:** Implemented Identity module for ironclad user authentication.
-- **Guardian of the Inbox:** Employed SMTP for email verification and password recovery.
+**Backend:**
 
-## Admin Dashboard
+ASP.NET Core 8.0 MVC: Web uygulaması geliştirme için temel framework.
+Entity Framework Core: Veritabanı etkileşimleri için ORM.
+SQL Server: İlişkisel veritabanı yönetim sistemi.
+ASP.NET Core Identity: Kullanıcı kimlik doğrulama ve yetkilendirme sistemi.
+AutoMapper: Nesneden nesneye eşleme kütüphanesi.
 
-- **Command Central:** A user-friendly admin dashboard for CRUD operations.
-- **Admin Arsenal:** Add, delete, and manage admin accounts, products, and categories with ease.
+**Frontend:**
 
-## E-commerce Features
+Bootstrap 5: Modern kullanıcı arayüzleri için duyarlı CSS framework'ü.
+jQuery / Vanilla JavaScript: Etkileşimli öğeler için istemci tarafı betik dili.
 
-- **Product Panorama:** Electro offers a dazzling array of electronic products and categories.
-- **Search & Pagination:** Seamlessly navigate through products with advanced search and pagination features.
-- **Filter Funnel:** Dynamically filter products by category, price range, or both, with real-time updates.
-- **Search Wizardry:** Discover products effortlessly with real-time search suggestions.
-- **Cart Control:** Manage your cart, shipments, and view shipment history like a pro.
-- **User Profile Power:** Registered users can personalize their experience with ease.
+**🚀 Kurulum ve Çalıştırma**
 
-## Technology Stack
+Projeyi yerel ortamınızda kurmak ve çalıştırmak için aşağıdaki adımları izleyin:
 
-- **Backend Brilliance:** Powered by C# and the artistry of OOP.
-- **Database Wizardry:** SQL Server and Entity Framework dance in perfect harmony.
-- **Frontend Finesse:** HTML, CSS, JavaScript, jQuery, and Bootstrap form the canvas of our masterpiece.
+**Ön Gereksinimler:**
 
-## Our Team 🙌💼
+.NET 8 SDK
+SQL Server (veya SQL Server Express/Developer Sürümü)
+Visual Studio 2022 (önerilir) veya uyumlu bir IDE/düzenleyici.,
 
-Meet the brilliant minds behind Electro:
+**Kurulum Adımları**
 
-- Mahmoud Sadek
-- Omar Ahmed Abo Ziada
-- Mahmoud Mohamed
-- Saeed Mohamed
-- Mohammed Abdelraheem
-- Anas Ashraf
-- Abdallah Refaey
+1-Depoyu Klonlayın:
+```
+Bash
 
-## Acknowledgements
+git clone https://github.com/furkannky/ecommerce.git
+cd ecommerce
+```
 
-Massive gratitude to our mentor, Eng. Christen Zarif, whose guidance was the wind beneath our wings at ITI. 
-A heartfelt thank you to Eng. Ayman Ayad, the Maestro of ITI Assiut Branch, for nurturing our growth in a vibrant learning environment.
+2-Veritabanı Bağlantısını Yapılandırın:
 
+ECommerce.WebUI projesindeki appsettings.json dosyasını açın.
+DefaultConnection bağlantı dizesini kendi yerel SQL Server örneğinize göre güncelleyin:
+```
+JSON
+
+"ConnectionStrings": {
+    "DefaultConnection": "Server=SİZİN_SQL_SUNUCU_ADINIZ;Database=ECommerceDb;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+},
+```
+SİZİN_SQL_SUNUCU_ADINIZ kısmını kendi SQL Server örnek adınızla değiştirin.
+
+Veritabanı Migrasyonlarını Uygulayın:
+
+Visual Studio'da Paket Yöneticisi Konsolu'nu açın (Araçlar > NuGet Paket Yöneticisi > Paket Yöneticisi Konsolu).
+"Varsayılan proje" açılır listesinin ECommerce.Infrastructure olarak ayarlandığından emin olun.
+Veritabanı şemanızı oluşturmak ve güncellemek için aşağıdaki komutları çalıştırın:
+```
+PowerShell
+
+Add-Migration InitialSetup
+Update-Database
+```
+İlk Yönetici Kullanıcısını Kurma:
+
+Uygulama, ilk başlatıldığında otomatik olarak bir yönetici kullanıcısı oluşturma mantığı içerir.
+Yönetici kimlik bilgilerini appsettings.json dosyasında yapılandırın:
+```
+JSON
+
+"AdminSettings": {
+    "Email": "admin@example.com",
+    "Password": "AdminPassword123!!"
+}
+```
+Yönetici hesabınız için güçlü, benzersiz bir şifre kullandığınızdan emin olun.
+
+Uygulamayı Çalıştırın:
+
+
+komut satırından çalıştırın:
+```
+Bash
+
+dotnet run --project ECommerce.WebUI
+```
+
+🤝 Katkıda Bulunma
+
+Bu projeyi geliştirmek isterseniz katkılarınızı bekliyoruz! Lütfen aşağıdaki adımları izleyin:
+
+
+Depoyu Fork'layın (Çatallayın).
+Özelliğiniz veya hata düzeltmeniz için yeni bir dal (branch) oluşturun: git checkout -b ozellik/harika-ozellik-adi
+Değişikliklerinizi açık ve özlü mesajlarla Commit'leyin: git commit -m 'feat: Yeni harika bir özellik eklendi'
+Dalınızı (branch) çatal depoya (forked repository) itin (push edin): git push origin ozellik/harika-ozellik-adi
+Bu depodaki main dalına (branch) karşı bir Çekme İsteği (Pull Request) açın.
+Lütfen kodunuzun projenin kodlama standartlarına uyduğundan ve uygun durumlarda testleri içerdiğinden emin olun.
+
+
+
+📞 İletişim
+
+Herhangi bir soru veya geri bildiriminiz için iletişime geçmekten çekinmeyin:
+
+
+Proje Yöneticisi: Furkan KAYA - furkannkayaa49@gmail.com
+
+LinkedIn: www.linkedin.com/in/furkanky
