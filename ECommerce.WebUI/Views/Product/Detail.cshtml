@@ -1,0 +1,98 @@
+﻿@using ECommerce.Application.DTOs
+@model ProductDto
+
+@{
+    ViewData["Title"] = @Model.Name; // Sayfa başlığını ürün adı yap
+}
+
+<div class="container mt-5">
+    <div class="row">
+        @* Ürün Resimleri - Sol Kısım *@
+        <div class="col-md-6">
+            @if (Model.ProductImages != null && Model.ProductImages.Any())
+            {
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                            int imageIndex = 0;
+                            foreach (var image in Model.ProductImages)
+                            {
+                                <div class="carousel-item @(imageIndex == 0 ? "active" : "")">
+                                    <img src="@image.ImagePath" class="d-block w-100 img-fluid rounded" alt="@Model.Name" style="max-height: 500px; object-fit: contain;">
+                                </div>
+                                imageIndex++;
+                            }
+                        }
+                    </div>
+                    @if (Model.ProductImages.Count > 1)
+                    {
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Önceki</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Sonraki</span>
+                        </button>
+                    }
+                </div>
+            }
+            else
+            {
+                <img src="https://via.placeholder.com/500x500?text=Resim+Yok" class="img-fluid rounded" alt="Resim Yok" style="max-height: 500px; object-fit: contain;">
+            }
+        </div>
+
+        @* Ürün Bilgileri - Sağ Kısım *@
+        <div class="col-md-6">
+            <h1 class="display-4">@Model.Name</h1>
+            <p class="lead text-muted">@Model.CategoryName</p>
+            <h2 class="text-primary my-4">@Model.Price.ToString("C2")</h2> @* Para birimi formatında göster *@
+            <p>
+                <strong>Stok:</strong>
+                @if (Model.Stock > 0)
+                {
+                    <span class="badge bg-success">Stokta Mevcut (@Model.Stock adet)</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Stok Tükendi</span>
+                }
+            </p>
+            <hr>
+            <p><strong>Açıklama:</strong></p>
+            <p>@Model.Description</p>
+
+            <div class="mt-4">
+                @* <<< Yeni Eklendi/Güncellendi: Sepete Ekle Butonu (Detay Sayfası) >>> *@
+                <form asp-action="AddToCart" asp-controller="Product" method="post" class="d-inline-flex align-items-center">
+                    <input type="hidden" name="ProductId" value="@Model.Id" />
+                    <div class="input-group" style="width: 150px;">
+                        <label for="quantity" class="visually-hidden">Miktar</label>
+                        <input type="number" id="quantity" name="Quantity" value="1" min="1" class="form-control" style="max-width: 80px;" />
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg ms-2" @(Model.Stock <= 0 ? "disabled" : "")>
+                        <i class="bi bi-cart-plus"></i> Sepete Ekle
+                    </button>
+                </form>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-lg ms-2">Ürünlere Geri Dön</a>
+            </div>
+
+            @* Yönetim Butonları (opsiyonel, admin paneli için)*@
+            <div class="mt-4 pt-3 border-top">
+                <p class="text-muted"><small>Yönetim İşlemleri:</small></p>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline ms-2" onsubmit="return confirm('Bu ürünü silmek istediğinizden emin misiniz?');">
+                    <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @* Bootstrap Carousel için gerekli JavaScript otomatik yüklenir *@
+}

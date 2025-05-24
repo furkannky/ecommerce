@@ -1,0 +1,204 @@
+﻿@model IEnumerable<ECommerce.Application.DTOs.CategoryDto>
+@using Microsoft.AspNetCore.Identity
+@using ECommerce.Domain.Entities.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Kategorilerimiz";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+
+<style>
+    /* Genel Stil İyileştirmeleri */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f8f9fa; /* Hafif bir arka plan rengi */
+    }
+
+    h1 {
+        font-weight: 700;
+        color: #343a40;
+        margin-bottom: 30px;
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out; /* Başlık animasyonu */
+    }
+
+    .container {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    /* Buton Stilleri */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: all 0.3s ease;
+        border-radius: 25px; /* Daha yuvarlak butonlar */
+        padding: 10px 25px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px); /* Hafif yukarı kayma */
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #343a40; /* Daha iyi okunabilirlik için */
+        transition: all 0.3s ease;
+        border-radius: 20px;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        transition: all 0.3s ease;
+        border-radius: 20px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4);
+        }
+
+    /* Alert Mesajları */
+    .alert-success {
+        border-radius: 10px;
+        background-color: #d4edda;
+        color: #155724;
+        border-color: #c3e6cb;
+        padding: 15px 20px;
+        animation: fadeIn 0.5s ease-out; /* Görünüm animasyonu */
+    }
+
+    /* Tablo Stilleri */
+    .table {
+        background-color: #fff;
+        border-radius: 15px; /* Köşeleri yuvarlatılmış tablo */
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08); /* Hafif gölge */
+        overflow: hidden; /* Köşeleri yuvarlatma için önemli */
+        margin-top: 30px;
+        animation: fadeIn 1s ease-out; /* Tablo animasyonu */
+    }
+
+        .table thead th {
+            background-color: #007bff; /* Başlık arka plan rengi */
+            color: #fff;
+            border-bottom: none; /* Alt çizgi kaldırıldı */
+            padding: 15px 20px;
+            font-weight: 600;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #f2f2f2; /* Çift sıralar için hafif renk */
+            }
+
+            .table tbody tr:hover {
+                background-color: #e9ecef; /* Satır üzerine gelince renk değişimi */
+            }
+
+        .table td {
+            padding: 12px 20px;
+            vertical-align: middle;
+            border-top: 1px solid #dee2e6;
+        }
+
+            /* Aksiyon Kolonu */
+            .table td:last-child {
+                white-space: nowrap; /* Butonların yan yana kalmasını sağlar */
+            }
+
+        .table form {
+            display: inline-block; /* Formun butonla aynı hizada olmasını sağlar */
+            margin-left: 5px; /* Butonlar arası boşluk */
+        }
+</style>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4 animate__animated animate__fadeInDown">Kategorilerimiz</h1>
+
+    <div class="d-flex justify-content-center mb-4">
+        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary animate__animated animate__pulse animate__infinite">
+                <i class="bi bi-plus-circle me-2"></i> Yeni Kategori Ekle
+            </a>
+        }
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success animate__animated animate__fadeInUp" role="alert">
+            <i class="bi bi-check-circle me-2"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive animate__animated animate__fadeIn">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.Description)</th>
+                        <th class="text-end">Aksiyonlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="animate__animated animate__fadeInUp" style="animation-delay: @((0.1 * Model.ToList().IndexOf(item)).ToString("0.0"))s;">
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            <td class="text-end">
+                                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-2 animate__animated animate__bounceIn">
+                                        <i class="bi bi-pencil-square"></i> Düzenle
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;" onsubmit="return confirm('Bu kategoriyi silmek istediğinizden emin misiniz?');">
+                                        <button type="submit" class="btn btn-danger btn-sm animate__animated animate__bounceIn">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm animate__animated animate__bounceIn">
+                                        <i class="bi bi-info-circle"></i> Detaylar
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center mt-5 animate__animated animate__fadeIn" role="alert">
+            <i class="bi bi-info-circle me-2"></i> Henüz hiç kategori bulunmamaktadır.
+        </div>
+    }
+</div>

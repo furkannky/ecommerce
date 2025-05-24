@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "Admin Paneli";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+    /* Genel Stil İyileştirmeleri */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f8f9fa; /* Hafif bir arka plan rengi */
+    }
+
+    h1 {
+        font-weight: 700;
+        color: #343a40;
+        margin-bottom: 30px;
+        text-align: center;
+        animation: fadeInDown 0.8s ease-out; /* Başlık animasyonu */
+    }
+
+    .container {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        color: #555;
+        text-align: center;
+        margin-bottom: 40px;
+        animation: fadeInUp 1s ease-out; /* Paragraf animasyonu */
+    }
+
+    /* Admin Link Grubu Stilleri */
+    .admin-list-group {
+        display: flex;
+        flex-wrap: wrap; /* Küçük ekranlarda alt alta gelmesi için */
+        justify-content: center;
+        gap: 20px; /* Öğeler arası boşluk */
+        margin-top: 30px;
+    }
+
+    .list-group-item {
+        flex: 1 1 300px; /* Esnek boyutlandırma ve min genişlik */
+        max-width: 350px; /* Maksimum genişlik */
+        background-color: #fff;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08); /* Hafif gölge */
+        padding: 25px;
+        text-align: center;
+        text-decoration: none;
+        color: #343a40;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 150px; /* Minimum yükseklik */
+        animation: zoomIn 0.8s ease-out; /* Her bir öğe için animasyon */
+    }
+
+        .list-group-item:hover {
+            transform: translateY(-8px); /* Üzerine gelince yukarı kayma */
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15); /* Daha güçlü gölge */
+            color: #007bff; /* Hoverda metin rengi */
+        }
+
+        .list-group-item i {
+            font-size: 3.5rem; /* İkon boyutu */
+            margin-bottom: 15px;
+            color: #007bff; /* İkon rengi */
+            transition: color 0.3s ease;
+        }
+
+        .list-group-item:hover i {
+            color: #0056b3; /* Hoverda ikon rengi */
+        }
+
+        .list-group-item h5 {
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 0;
+        }
+
+        /* Animasyon Gecikmeleri (Opsiyonel ama estetik) */
+        .list-group-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .list-group-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .list-group-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .list-group-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+    /* Daha fazla öğe varsa buraya ekleyebilirsiniz */
+</style>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4 animate__animated animate__fadeInDown">Admin Paneli</h1>
+
+    <p class="text-center animate__animated animate__fadeInUp">
+        Admin paneline hoş geldiniz. Buradan sitenizin ürünlerini, kategorilerini ve diğer ayarlarını kolayca yönetebilirsiniz.
+    </p>
+
+    <div class="admin-list-group">
+        <a asp-controller="Product" asp-action="Create" class="list-group-item animate__animated animate__zoomIn">
+            <i class="bi bi-plus-square"></i>
+            <h5>Yeni Ürün Ekle</h5>
+        </a>
+        <a asp-controller="Product" asp-action="Index" class="list-group-item animate__animated animate__zoomIn">
+            <i class="bi bi-box-seam"></i>
+            <h5>Ürünleri Yönet</h5>
+        </a>
+        <a asp-controller="Category" asp-action="Create" class="list-group-item animate__animated animate__zoomIn">
+            <i class="bi bi-tags"></i>
+            <h5>Yeni Kategori Ekle</h5>
+        </a>
+        <a asp-controller="Category" asp-action="Index" class="list-group-item animate__animated animate__zoomIn">
+            <i class="bi bi-list-nested"></i>
+            <h5>Kategorileri Yönet</h5>
+        </a>
+        <a asp-controller="Order" asp-action="Index" class="list-group-item animate__animated animate__zoomIn">
+            <i class="bi bi-bag-check"></i>
+            <h5>Siparişleri Yönet</h5>
+        </a>
+        <a asp-controller="User" asp-action="Index" class="list-group-item animate__animated animate__zoomIn">
+            <i class="bi bi-people"></i>
+            <h5>Kullanıcıları Yönet</h5>
+        </a>
+    </div>
+</div>

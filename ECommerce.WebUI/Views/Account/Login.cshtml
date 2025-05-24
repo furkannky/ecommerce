@@ -1,0 +1,167 @@
+﻿@model ECommerce.Application.DTOs.Account.LoginDto
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "_Layout"; // Opsiyonel: Eğer farklı bir layout kullanmak isterseniz
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+
+<style>
+    /* Genel Stil İyileştirmeleri */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #e9ecef; /* Hafif gri bir arka plan */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Sayfanın tamamını kapla */
+        margin: 0;
+    }
+
+    .login-container {
+        max-width: 450px; /* Formun maksimum genişliği */
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Daha belirgin gölge */
+        animation: fadeInDown 0.8s ease-out; /* Kart girişi animasyonu */
+    }
+
+    h1 {
+        font-weight: 700;
+        color: #343a40;
+        margin-bottom: 25px;
+        text-align: center;
+        font-size: 2.2rem;
+        animation: fadeInDown 0.6s ease-out;
+    }
+
+    h4 {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 20px;
+        text-align: center;
+        animation: fadeInUp 0.7s ease-out;
+    }
+
+    hr {
+        border-top: 2px solid #007bff; /* Mavi bir çizgi */
+        width: 60px; /* Kısa çizgi */
+        margin: 0 auto 30px auto;
+        opacity: 1; /* Görünürlüğü artır */
+    }
+
+    /* Form Grupları */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 8px;
+            display: block; /* Label'ı üstte göster */
+        }
+
+    .form-control {
+        border-radius: 10px; /* Yuvarlak input alanları */
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+
+    .form-check-input {
+        border-radius: 5px; /* Yuvarlak checkbox */
+    }
+
+    .form-check-label {
+        color: #555;
+    }
+
+    /* Buton Stilleri */
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: all 0.3s ease;
+        border-radius: 25px; /* Daha yuvarlak buton */
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        width: 100%; /* Tam genişlik */
+        margin-top: 15px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px); /* Hafif yukarı kayma */
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+        }
+
+    /* Link Stilleri */
+    p a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+        p a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+    .text-danger {
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: block; /* Hata mesajlarının ayrı satırda olması için */
+    }
+</style>
+
+<div class="login-container">
+    <h1 class="animate__animated animate__fadeInDown">Giriş Yap</h1>
+
+    <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" class="animate__animated animate__fadeInUp">
+        <h4>Hesabınıza giriş yapın.</h4>
+        <hr />
+        <div asp-validation-summary="All" class="text-danger mb-3 animate__animated animate__shakeX"></div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="E-posta adresinizi girin" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" type="password" placeholder="Şifrenizi girin" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <input asp-for="RememberMe" class="form-check-input" />
+            <label asp-for="RememberMe" class="form-check-label"></label>
+        </div>
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary animate__animated animate__bounceIn">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Giriş Yap
+            </button>
+        </div>
+        <p class="text-center mt-4">
+            <a asp-action="Register"><i class="bi bi-person-plus me-1"></i> Hesabınız yok mu? Kayıt Olun</a>
+        </p>
+        <p class="text-center">
+            <a asp-action="ForgotPassword"><i class="bi bi-key me-1"></i> Şifremi Unuttum</a>
+        </p>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

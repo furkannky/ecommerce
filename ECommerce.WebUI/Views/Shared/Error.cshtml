@@ -1,0 +1,154 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Hata Oluştu"; // Daha kullanıcı dostu bir başlık
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+    /* Genel Stil İyileştirmeleri */
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f8f9fa; /* Hafif bir arka plan rengi */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Sayfanın tamamını kapla */
+        margin: 0;
+        text-align: center;
+    }
+
+    .error-card {
+        max-width: 700px;
+        background-color: #fff;
+        padding: 50px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease-out; /* Genel giriş animasyonu */
+    }
+
+        .error-card .icon-large {
+            font-size: 6rem; /* İkonu daha büyük yap */
+            color: #dc3545; /* Kırmızı renk */
+            margin-bottom: 30px;
+            animation: swing 1.5s ease-out; /* İkon için sallanma animasyonu */
+        }
+
+    h1 {
+        font-weight: 700;
+        color: #dc3545; /* Kırmızı renk */
+        margin-bottom: 15px;
+        font-size: 3.5rem; /* Daha büyük başlık */
+        animation: bounceIn 1s ease-out; /* Başlık animasyonu */
+    }
+
+    h2 {
+        font-weight: 600;
+        color: #6c757d; /* Gri ton */
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        animation: fadeInUp 1.2s ease-out; /* Alt başlık animasyonu */
+    }
+
+    p {
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .request-id-section {
+        background-color: #e9ecef;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        border: 1px dashed #ced4da; /* Kesik çizgi */
+        animation: slideInUp 1s ease-out; /* Animasyon */
+    }
+
+        .request-id-section strong {
+            color: #343a40;
+        }
+
+        .request-id-section code {
+            background-color: #dee2e6;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+            color: #c0392b; /* Kırmızımsı kod rengi */
+        }
+
+    h3 {
+        font-weight: 600;
+        color: #007bff; /* Mavi renk */
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .development-info p {
+        background-color: #ffeeba; /* Sarımsı arka plan */
+        border-left: 5px solid #ffc107; /* Sol kenarlık */
+        padding: 20px;
+        border-radius: 8px;
+        color: #856404;
+        font-size: 1em;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    .btn-back-home {
+        background-color: #28a745; /* Yeşil buton */
+        border-color: #28a745;
+        color: #fff;
+        padding: 15px 35px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: 30px;
+        transition: all 0.3s ease;
+        animation: zoomIn 1.5s ease-out; /* Buton animasyonu */
+    }
+
+        .btn-back-home:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+        }
+</style>
+
+<div class="error-card">
+    <i class="bi bi-exclamation-octagon-fill icon-large animate__animated"></i>
+    <h1 class="text-danger animate__animated">Beklenmedik Bir Hata Oluştu!</h1>
+    <h2 class="text-secondary animate__animated">İsteğiniz işlenirken bir sorunla karşılaşıldı.</h2>
+
+    @if (Model.ShowRequestId)
+    {
+        <div class="request-id-section animate__animated">
+            <p>
+                <strong>Hata Kimliği:</strong> <code>@Model.RequestId</code>
+            </p>
+            <p class="mb-0">
+                Bu hatayı teknik ekibimize bildirirken lütfen bu kimliği paylaşınız.
+            </p>
+        </div>
+    }
+
+    <div class="development-info">
+        <h3>Geliştirme Modu</h3>
+        <p>
+            Uygulamanızın **Geliştirme** ortamına geçmek, oluşan hata hakkında daha detaylı bilgi görüntüleyecektir.
+        </p>
+        <p>
+            **Geliştirme ortamı, dağıtılmış uygulamalar için etkinleştirilmemelidir.** Son kullanıcılara istisnalardan hassas bilgiler görüntülenmesine neden olabilir. Yerel hata ayıklama için, **ASPNETCORE_ENVIRONMENT** ortam değişkenini **Development** olarak ayarlayarak ve uygulamayı yeniden başlatarak **Geliştirme** ortamını etkinleştirin.
+        </p>
+    </div>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-back-home animate__animated">
+        <i class="bi bi-arrow-left-circle me-2"></i> Ana Sayfaya Dön
+    </a>
+</div>

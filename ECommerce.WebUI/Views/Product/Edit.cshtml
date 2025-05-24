@@ -1,0 +1,103 @@
+﻿@* ECommerce.WebUI/Views/Product/Edit.cshtml *@
+
+@using ECommerce.Application.DTOs
+@model UpdateProductDto
+
+@{
+    ViewData["Title"] = "Ürün Düzenle";
+}
+
+<h1>Ürün Düzenle</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        @* Buraya enctype="multipart/form-data" eklendi *@
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Stock" class="control-label"></label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            @* Mevcut Resimler ve Checkbox'lar *@
+            <div class="form-group mb-3">
+                <label class="control-label">**Mevcut Resimler (Tutmak istediklerinizi işaretli bırakın)**</label>
+                @if (Model.ExistingImagePaths != null && Model.ExistingImagePaths.Any())
+                {
+                    <div class="row">
+                        @for (int i = 0; i < Model.ExistingImagePaths.Count; i++)
+                        {
+                            <div class="col-md-3 mb-2">
+                                <div class="card">
+                                    <img src="@Model.ExistingImagePaths[i]" class="card-img-top" alt="Ürün Resmi" style="max-height: 100px; object-fit: contain;">
+                                    <div class="card-body p-1 text-center">
+                                        <div class="form-check">
+                                            @* Gizli alan, mevcut yolun değerini gönderir *@
+                                            <input type="hidden" name="ExistingImagePaths[@i]" value="@Model.ExistingImagePaths[i]" />
+                                            <input type="checkbox" class="form-check-input" checked onchange="toggleHiddenField(this, 'ExistingImagePaths[@i]')">
+                                            <label class="form-check-label">Tut</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>Mevcut resim yok.</p>
+                }
+            </div>
+
+            @* Yeni Resim Yükleme Alanı *@
+            <div class="form-group mb-3">
+                <label asp-for="NewImages" class="control-label">Yeni Resimler Ekle</label>
+                <input type="file" asp-for="NewImages" class="form-control" multiple /> @* multiple özelliği birden fazla dosya seçmeyi sağlar *@
+                <span asp-validation-for="NewImages" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 50px;">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Listeye Geri Dön</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Checkbox işaretlenmediğinde gizli alanı disabled yaparak değerinin gönderilmemesini sağlar
+        function toggleHiddenField(checkbox, hiddenFieldName) {
+            var hiddenField = document.querySelector('input[name="' + hiddenFieldName + '"][type="hidden"]');
+            if (hiddenField) {
+                hiddenField.disabled = !checkbox.checked;
+            }
+        }
+    </script>
+}
